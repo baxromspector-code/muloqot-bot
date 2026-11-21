@@ -1,0 +1,66 @@
+# Render Blueprint: bot + sayt (Mini App, admin panel) bitta bepul web-servisda, baza — bepul PostgreSQL.
+# Bot webhook rejimida (admin_site/tg_webhook.py). Bepul baza 30 kundan keyin o'chiriladi — undan oldin
+# zaxira oling (python tools/backup_db.py, DATABASE_URL = Render'dagi External URL) yoki pullik rejaga o'ting.
+services:
+  - type: web
+    name: muloqot
+    runtime: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: SERVICE_ROLE
+        value: web
+      - key: BOT_WEBHOOK
+        value: "1"
+      - key: KEEP_AWAKE
+        value: "1"
+      - key: ADMIN_HOST
+        value: 0.0.0.0
+      - key: ADMIN_HTTPS
+        value: "1"
+      - key: ADMIN_WORKERS
+        value: "1"
+      - key: LOCAL_BACKUP
+        value: "0"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: muloqot-db
+          property: connectionString
+      - key: BOT_TOKEN
+        sync: false
+      - key: TELEGRAPH_TOKEN
+        sync: false
+      - key: ADMIN_SECRET_KEY
+        generateValue: true
+      - key: ADMIN_IDS
+        value: "7089836188,5642609149"
+      - key: PANEL_ADMIN_IDS
+        value: "7089836188,5642609149"
+      - key: ADMIN_CHAT_ID
+        value: "5642609149"
+      - key: COMPLAINT_CHAT_ID
+        value: "5642609149"
+      - key: TELEGRAM_URL
+        value: https://t.me/kiut_muloqot
+      - key: INSTAGRAM_URL
+        value: https://instagram.com/kiut.muloqot
+      - key: SITE_BOT_URL
+        value: https://t.me/KIUT_muloqotbot
+      - key: PRIVACY_URL
+        value: https://telegra.ph/MULOQOT-boti-KIUT-muloqotbot--Maxfiylik-siyosati-11-18
+      - key: ADMIN_THEME
+        value: skeuo
+      - key: ADMIN_THEME_SWITCH
+        value: "1"
+      - key: GOOGLE_CLIENT_ID
+        value: 933093748310-0u7utuf89udtbnevg7c383lhal9jera8.apps.googleusercontent.com
+
+databases:
+  - name: muloqot-db
+    plan: free
+    region: frankfurt
+    databaseName: muloqot
+    user: muloqot
+    postgresMajorVersion: "16"

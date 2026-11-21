@@ -1,0 +1,6 @@
+{
+  "reportOptionalMemberAccess": false,
+  "reportOptionalSubscript": false,
+  "reportAttributeAccessIssue": false,
+  "reportArgumentType": false
+}

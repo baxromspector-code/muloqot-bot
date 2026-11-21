@@ -1,0 +1,15 @@
+.env
+pgdata/
+__pycache__/
+*.pyc
+*.log
+backups/
+muloqot-backup.sql
+*.dump
+*.part
+# dizayn rasmlari repoga kerak emas — faqat bot ishlatadigan emoji ID'lari
+dizayn/**
+!dizayn/**/
+!dizayn/emoji_anim/ids.json
+!dizayn/emoji_rasmiy/ids.json
+!dizayn/emoji_premium/ids.json

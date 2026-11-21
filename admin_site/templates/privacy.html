@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maxfiylik siyosati — MULOQOT</title>
+<meta name="description" content="MULOQOT boti va saytining maxfiylik siyosati: qanday ma'lumot to'planadi, nima uchun va qanday o'chiriladi.">
+<link rel="icon" href="/static/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="/static/public.css?v={{ v }}">
+<style>
+  .doc { max-width: 760px; margin: 28px auto 0; padding: 32px 30px; }
+  .doc h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; margin-bottom: 6px; }
+  .doc .meta { color: var(--muted); margin: 0 0 22px; font-weight: 600; }
+  .doc h2 { font-size: 19px; font-weight: 800; margin: 24px 0 8px; }
+  .doc p, .doc li { color: var(--esp2); line-height: 1.7; }
+  .doc ul { padding-left: 20px; margin: 6px 0; }
+  .back { display: inline-flex; margin: 22px auto 0; }
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i class="b b1"></i><i class="b b2"></i></div>
+<main>
+  <article class="doc card">
+    <h1>{{ title }}</h1>
+    <p class="meta">{{ meta }}</p>
+    {% for block in blocks %}
+      {% if block.kind == "h" %}<h2>{{ block.text }}</h2>
+      {% elif block.kind == "ul" %}<ul>{% for li in block.lines %}<li>{{ li }}</li>{% endfor %}</ul>
+      {% else %}<p>{{ block.text }}</p>{% endif %}
+    {% endfor %}
+  </article>
+  <div style="text-align:center"><a class="gbtn back" href="/">← Bosh sahifa</a></div>
+</main>
+<footer class="foot"><span>© MULOQOT · Kimyo International University in Tashkent</span></footer>
+</body>
+</html>

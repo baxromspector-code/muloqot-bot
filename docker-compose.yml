@@ -1,0 +1,84 @@
+# MULOQOT: PostgreSQL + bot + sayt (ochiq sahifa, admin panel, Telegram ilova) + Caddy (avtomatik HTTPS) + kunlik zaxira.
+# Serverda: .env ni to'ldiring (DOMAIN, POSTGRES_PASSWORD, BOT_TOKEN ...) va  docker compose up -d --build
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: muloqot
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?.env faylida POSTGRES_PASSWORD ni yozing}
+      POSTGRES_DB: muloqot
+      TZ: Asia/Tashkent
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U muloqot"]
+      interval: 5s
+      retries: 10
+
+  bot:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://muloqot:${POSTGRES_PASSWORD}@db:5432/muloqot
+      SITE_URL: https://${DOMAIN}
+      TZ: Asia/Tashkent
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build: .
+    restart: unless-stopped
+    command: python -m admin_site
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://muloqot:${POSTGRES_PASSWORD}@db:5432/muloqot
+      SITE_URL: https://${DOMAIN}
+      ADMIN_BASE_URL: https://${DOMAIN}
+      ADMIN_HTTPS: "1"
+      ADMIN_DEV_LOGIN: "0"
+      ADMIN_HOST: 0.0.0.0
+      ADMIN_PORT: 8080
+      ADMIN_WORKERS: "4"   # 4 ishchi jarayon — 3000 a'zo bir vaqtda kirganda ham tez (yuklama sinovi)
+      TZ: Asia/Tashkent
+    expose:
+      - "8080"                  # tashqariga faqat Caddy orqali (HTTPS)
+    depends_on:
+      db:
+        condition: service_healthy
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?.env faylida DOMAIN ni yozing (masalan muloqotclub.uz)}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data        # Let's Encrypt sertifikatlari shu yerda saqlanadi
+      - caddy_config:/config
+    depends_on:
+      - web
+
+  backup:                       # har kuni baza zaxirasi ./backups ga, 14 kundan eskisi o'chiriladi
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      TZ: Asia/Tashkent
+    volumes:
+      - ./backups:/backups
+    entrypoint: ["sh", "-c", "while true; do pg_dump -h db -U muloqot muloqot | gzip > /backups/muloqot-$$(date +%F).sql.gz; find /backups -name '*.sql.gz' -mtime +14 -delete; sleep 86400; done"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

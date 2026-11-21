@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="uz" data-theme="{{ theme }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MULOQOT · Boshqaruv paneli</title>
+<link rel="icon" href="/static/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="/static/style.css?v={{ v }}">
+{% if theme_switch %}<script>try{const t=localStorage.getItem("mlq_theme");if(t&&["diplomat","skeuo","glass"].includes(t)&&!new URLSearchParams(location.search).get("theme"))document.documentElement.dataset.theme=t}catch(e){}</script>{% endif %}
+<script src="/static/vendor/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="bg-layer" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><div class="guilloche"></div><div class="dotgrid"></div></div>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#/overview">
+      <img src="/static/logo.png" alt="">
+      <span><b>MULOQOT</b><small>Boshqaruv paneli</small></span>
+    </a>
+    <nav class="nav">
+      <p class="nav-cap">Asosiy</p>
+      <a href="#/overview" data-page="overview"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Umumiy ko'rinish</a>
+      <a href="#/students" data-page="students"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M16 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/></svg>Talabalar<em id="navStudents"></em></a>
+      <a href="#/applications" data-page="applications"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>Arizalar<em id="navApps" class="hot"></em></a>
+      <a href="#/events" data-page="events"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Tadbirlar</a>
+      <a href="#/appeals" data-page="appeals"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg>Murojaatlar<em id="navAppeals" class="hot"></em></a>
+      <p class="nav-cap">Tahlil</p>
+      <a href="#/activity" data-page="activity"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>Bot faolligi</a>
+      <p class="nav-cap">Sayt</p>
+      <a href="#/siteposts" data-page="siteposts"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>E'lon va reklamalar</a>
+      <a href="#/sitegallery" data-page="sitegallery"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>Galereya</a>
+      <a href="#/siteinfo" data-page="siteinfo"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Sayt ma'lumotlari</a>
+      <a href="/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>Saytni ochish</a>
+    </nav>
+    <div class="side-foot">
+      <div class="me">
+        {% if admin.picture %}<img src="{{ admin.picture }}" alt="" referrerpolicy="no-referrer">{% else %}<span class="ava">{{ (admin.name or "A")[0]|upper }}</span>{% endif %}
+        <div><b>{{ admin.name }}</b><small>{{ admin.email }}</small></div>
+      </div>
+      <form method="post" action="/logout"><button class="btn ghost sm w100" type="submit"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Chiqish</button></form>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn only-mobile" id="menuBtn" aria-label="Menyu"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <div class="tb-title"><h1 id="pageTitle">Umumiy ko'rinish</h1><p id="pageSub"></p></div>
+      <button class="search-trigger" id="cmdBtn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Talaba, telefon, ID qidirish…</span><kbd>Ctrl K</kbd></button>
+      {% if theme_switch %}
+      <div class="theme-switch" title="Dizayn varianti">
+        {% for key, label in switch_themes %}<button data-t="{{ key }}" title="{{ label }}" aria-label="{{ label }}"></button>{% endfor %}
+      </div>
+      {% endif %}
+      <button class="icon-btn" id="refreshBtn" title="Yangilash"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button>
+    </header>
+    <main class="content" id="view"></main>
+  </div>
+</div>
+
+<!-- talaba kartochkasi -->
+<div class="drawer-scrim" id="drawerScrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+
+<!-- buyruqlar paneli -->
+<div class="cmdk" id="cmdk" hidden>
+  <div class="cmdk-box">
+    <div class="cmdk-input"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="cmdInput" placeholder="Ism, telefon, guruh, talaba ID yoki a'zolik raqami…" autocomplete="off"><kbd>Esc</kbd></div>
+    <div class="cmdk-list" id="cmdList"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>window.MLQ = {{ meta|tojson }};</script>
+<script src="/static/app.js?v={{ v }}"></script>
+</body>
+</html>

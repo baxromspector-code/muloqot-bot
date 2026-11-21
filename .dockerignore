@@ -1,0 +1,17 @@
+.env
+pgdata/
+backups/
+muloqot-backup.sql
+__pycache__/
+*.pyc
+*.log
+.git/
+# dizayn rasmlari serverga kerak emas — faqat bot ishlatadigan emoji ID'lari
+dizayn/**
+!dizayn/emoji_anim/ids.json
+!dizayn/emoji_rasmiy/ids.json
+!dizayn/emoji_premium/ids.json
+# vaqtinchalik va sinov fayllari
+tunnel.out.log
+autostart.log
+*.dump

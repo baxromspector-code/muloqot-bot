@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ s.hero_title }} — {{ s.hero_subtitle }}</title>
+<meta name="description" content="{{ s.about[:160] }}">
+<meta property="og:title" content="{{ s.hero_title }} — {{ s.hero_subtitle }}">
+<meta property="og:description" content="{{ s.motto }}">
+<meta property="og:image" content="/static/public/og.png">
+<meta name="theme-color" content="#2a241e">
+<link rel="icon" href="/static/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="/static/public.css?v={{ v }}">
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i class="b b1"></i><i class="b b2"></i><i class="b b3"></i></div>
+
+<header class="nav" id="top">
+  <a class="brand" href="#top"><img src="/static/logo.png" alt="" width="40" height="40"><span><b>{{ s.hero_title }}</b><small>KIUT</small></span></a>
+  <nav class="links" id="links" aria-label="Bo'limlar">
+    <a href="#elonlar">E'lonlar</a>
+    <a href="#tadbirlar">Tadbirlar</a>
+    <a href="#haqida">Biz haqimizda</a>
+    {% if gallery %}<a href="#galereya">Galereya</a>{% endif %}
+    <a href="#aloqa">Aloqa</a>
+  </nav>
+  <a class="gbtn dark cta" href="{{ s.bot }}" target="_blank" rel="noopener">A'zo bo'lish</a>
+  <button class="gbtn menu" id="menuBtn" aria-label="Menyu" aria-expanded="false" aria-controls="links"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+</header>
+
+<main>
+  <!-- bosh banner -->
+  <section class="hero">
+    <div class="hero-txt">
+      <p class="eyebrow">Kimyo International University in Tashkent</p>
+      <h1>{{ s.hero_title }}</h1>
+      <p class="sub">{{ s.hero_subtitle }}</p>
+      <p class="motto">«{{ s.motto }}»</p>
+      <div class="row">
+        <a class="gbtn dark lg" href="{{ s.bot }}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21.5 4.5 2.8 11.7c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.6c.3.9 1.4 1.1 2 .4l2.6-2.7 4.7 3.5c.8.6 1.9.1 2.1-.9L23 5.8c.2-1-.7-1.7-1.5-1.3z"/><path d="m7.5 15.2 10-7.4"/></svg>Botga o'tish</a>
+        <a class="gbtn lg" href="{{ s.telegram }}" target="_blank" rel="noopener">Telegram kanal</a>
+        <a class="gbtn lg" href="{{ s.instagram }}" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      {% set st = [] %}
+      {% if stats.members %}{% set _ = st.append((stats.members, "faol a'zo")) %}{% endif %}
+      {% if stats.students %}{% set _ = st.append((stats.students, "botda ro'yxatdan o'tgan")) %}{% endif %}
+      {% if stats.events %}{% set _ = st.append((stats.events, "o'tkazilgan tadbir")) %}{% endif %}
+      {% if st %}
+      <ul class="stats">{% for n, l in st %}<li><b>{{ n }}</b><span>{{ l }}</span></li>{% endfor %}</ul>
+      {% endif %}
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="orb"><img src="/static/logo.png" alt=""></div>
+      <span class="chip c1">Debat</span><span class="chip c2">Model UN</span><span class="chip c3">Simulyatsiya</span><span class="chip c4">Treninglar</span>
+    </div>
+  </section>
+
+  <!-- e'lon va reklamalar -->
+  <section class="sec" id="elonlar">
+    <div class="sec-h"><h2>E'lonlar va yangiliklar</h2><p>Klub va universitetdagi so'nggi xabarlar</p></div>
+    <div class="posts">
+      {% for p in posts %}
+      <article class="post card{% if p.pinned %} pinned{% endif %}{% if not p.image_url %} noimg{% endif %}">
+        {% if p.image_url %}<img class="post-img" src="{{ p.image_url }}" alt="" loading="lazy">{% endif %}
+        <div class="post-b">
+          <div class="tags">{% if p.pinned %}<span class="tag gold">Muhim</span>{% endif %}<span class="tag">{{ "Reklama" if p.kind == "ad" else "E'lon" }}</span><time>{{ p.created_at[:10] }}</time></div>
+          <h3>{{ p.title }}</h3>
+          {% if p.body %}<p class="body">{{ p.body }}</p>{% endif %}
+          {% if p.link_url %}<a class="gbtn sm" href="{{ p.link_url }}" target="_blank" rel="noopener">{{ p.link_label or "Batafsil" }} →</a>{% endif %}
+        </div>
+      </article>
+      {% else %}
+      <article class="post card noimg pinned">
+        <div class="post-b"><div class="tags"><span class="tag gold">A'zolik</span></div>
+          <h3>A'zolik ochiq va bepul</h3>
+          <p class="body">Barcha fakultet talabalari klubga a'zo bo'lishi mumkin. Ariza botda bir necha daqiqada to'ldiriladi.</p>
+          <a class="gbtn sm dark" href="{{ s.bot }}" target="_blank" rel="noopener">Ariza topshirish →</a></div>
+      </article>
+      <article class="post card noimg">
+        <div class="post-b"><div class="tags"><span class="tag">Yo'nalishlar</span></div>
+          <h3>Debat, Model UN va simulyatsiyalar</h3>
+          <p class="body">Haftalik mashg'ulotlar, ichki turnirlar, muzokara va inqirozni boshqarish simulyatsiyalari.</p></div>
+      </article>
+      <article class="post card noimg">
+        <div class="post-b"><div class="tags"><span class="tag">Uchrashuvlar</span></div>
+          <h3>Diplomatlar va mutaxassislar bilan</h3>
+          <p class="body">Ochiq uchrashuvlar, treninglar va tahliliy ishlar — yangiliklarni Telegram kanalimizda kuzating.</p>
+          <a class="gbtn sm" href="{{ s.telegram }}" target="_blank" rel="noopener">Kanalga o'tish →</a></div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- tadbirlar -->
+  <section class="sec" id="tadbirlar">
+    <div class="sec-h"><h2>Yaqin tadbirlar</h2><p>Ro'yxatdan o'tish bot orqali</p></div>
+    {% if events %}
+    <div class="events">
+      {% for e in events %}
+      <article class="ev card">
+        <div class="ev-date"><b>{{ e.date_text or "Tez orada" }}</b>{% if e.place %}<span>{{ e.place }}</span>{% endif %}</div>
+        <h3>{{ e.title }}</h3>
+        {% if e.description %}<p>{{ e.description[:220] }}</p>{% endif %}
+        <div class="ev-f">
+          {% if e.capacity %}<span class="seats">{{ e.capacity - e.taken if e.capacity > e.taken else 0 }} ta joy qoldi</span>{% else %}<span class="seats">Joy cheklanmagan</span>{% endif %}
+          <a class="gbtn sm dark" href="{{ s.bot }}" target="_blank" rel="noopener">Yozilish</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="card empty"><p>Hozircha ochiq tadbir yo'q. Yangi tadbirlar e'lon qilinishi bilan botda xabar beramiz.</p><a class="gbtn sm dark" href="{{ s.bot }}" target="_blank" rel="noopener">Botga obuna bo'lish</a></div>
+    {% endif %}
+  </section>
+
+  <!-- biz haqimizda -->
+  <section class="sec" id="haqida">
+    <div class="about card">
+      <div>
+        <h2>Biz haqimizda</h2>
+        <p class="lead">{{ s.about }}</p>
+      </div>
+      <ul class="dirs">
+        <li><b>Debat</b><span>Muntazam mashg'ulotlar va ichki turnirlar</span></li>
+        <li><b>Model UN</b><span>Universitet konferensiyalari, delegat tayyorlash</span></li>
+        <li><b>Simulyatsiyalar</b><span>Muzokara va inqirozni boshqarish</span></li>
+        <li><b>Tahliliy ishlar</b><span>Xalqaro masalalar bo'yicha tahlil va sharhlar</span></li>
+        <li><b>Treninglar</b><span>Notiqlik, jamoa va loyiha boshqaruvi</span></li>
+        <li><b>Ochiq uchrashuvlar</b><span>Diplomatlar va soha mutaxassislari bilan</span></li>
+        <li><b>Media va PR</b><span>Ijtimoiy tarmoqlar, foto-video, dizayn va klub xabarlari</span></li>
+        <li><b>KIUT SOS</b><span>Tartib-intizomni nazorat qiluvchi guruh</span></li>
+      </ul>
+    </div>
+  </section>
+
+  {% if gallery %}
+  <!-- galereya -->
+  <section class="sec" id="galereya">
+    <div class="sec-h"><h2>Galereya</h2><p>Tadbirlarimizdan lavhalar</p></div>
+    <div class="gallery">
+      {% for g in gallery %}
+      <figure class="g-item"><a href="{{ g.url }}" target="_blank" rel="noopener"><img src="{{ g.url }}" alt="{{ g.caption or 'MULOQOT tadbiri' }}" loading="lazy"></a>{% if g.caption %}<figcaption>{{ g.caption }}</figcaption>{% endif %}</figure>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- aloqa -->
+  <section class="sec" id="aloqa">
+    <div class="sec-h"><h2>Aloqa va manzil</h2><p>Bizni toping yoki yozing</p></div>
+    <div class="contact">
+      <div class="card c-list">
+        <a class="c-row" href="https://www.google.com/maps/search/?api=1&query={{ s.map_query|urlencode }}" target="_blank" rel="noopener"><span class="ci"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><span><small>Manzil</small><b>{{ s.address }}</b></span></a>
+        {% if s.phone %}<a class="c-row" href="tel:{{ s.phone|replace(' ', '') }}"><span class="ci"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span><small>Telefon</small><b>{{ s.phone }}</b></span></a>{% endif %}
+        {% if s.hours %}<div class="c-row"><span class="ci"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span><small>Ish vaqti</small><b>{{ s.hours }}</b></span></div>{% endif %}
+        {% if s.email %}<a class="c-row" href="mailto:{{ s.email }}"><span class="ci"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span><small>Email</small><b>{{ s.email }}</b></span></a>{% endif %}
+        <div class="socials">
+          <a class="gbtn" href="{{ s.telegram }}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21.5 4.5 2.8 11.7c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.6c.3.9 1.4 1.1 2 .4l2.6-2.7 4.7 3.5c.8.6 1.9.1 2.1-.9L23 5.8c.2-1-.7-1.7-1.5-1.3z"/></svg>Telegram</a>
+          <a class="gbtn" href="{{ s.instagram }}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/></svg>Instagram</a>
+          <a class="gbtn dark" href="{{ s.bot }}" target="_blank" rel="noopener">Telegram bot</a>
+        </div>
+      </div>
+      <div class="card map">
+        <iframe title="Xarita: {{ s.address }}" src="https://maps.google.com/maps?q={{ s.map_query|urlencode }}&amp;z=16&amp;output=embed" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>© {{ year }} {{ s.hero_title }} · Kimyo International University in Tashkent</span>
+  <span><a href="/privacy">Maxfiylik siyosati</a> · <a href="#top">Yuqoriga ↑</a></span>
+</footer>
+
+<script>
+(function () {
+  var b = document.getElementById("menuBtn"), l = document.getElementById("links");
+  b.addEventListener("click", function () { var o = l.classList.toggle("open"); b.setAttribute("aria-expanded", o); });
+  l.addEventListener("click", function (e) { if (e.target.tagName === "A") { l.classList.remove("open"); b.setAttribute("aria-expanded", "false"); } });
+})();
+</script>
+</body>
+</html>

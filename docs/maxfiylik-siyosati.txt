@@ -1,0 +1,26 @@
+MULOQOT boti (@KIUT_muloqotbot) — Maxfiylik siyosati
+Kimyo International University in Tashkent (KIUT) xalqaro munosabatlar klubi. Kuchga kirgan sana: 2026-yil 18-noyabr.
+
+1. Qanday ma'lumot to'planadi
+• Telegram ma'lumotlari: ID raqam, foydalanuvchi nomi (username), ism va tanlangan til.
+• Ro'yxatdan o'tishda: familiya-ism, yo'nalish, kurs, guruh, talabalik guvohnomasi raqami, telefon raqami (o'zingiz «Raqamni yuborish» tugmasi bilan yuborasiz) va surat.
+• A'zolik arizasida: email, ijtimoiy tarmoq havolasi (ixtiyoriy), tillar, tajriba, motivatsiya, qulay vaqt va foto/video roziligi.
+• Klub faoliyatida: tadbir chiptalari va davomat, ballar, ko'ngillilik arizalari, murojaatlar va ularga ilova qilingan fayllar.
+• Bot faolligi: qaysi tugma yoki buyruq bosilgani va vaqti. Yozgan xabaringiz matni bu jurnalda saqlanmaydi.
+
+2. Nima uchun ishlatiladi
+Faqat klub ishi uchun: ro'yxatga olish va a'zolik, tadbirlarga yozilish va kirishda davomat, a'zolik guvohnomasi, ball va reyting, murojaatlarga javob berish hamda tadbirlar haqida xabar berish. Surat guvohnomada va tadbirga kirishda shaxsni tekshirish uchun ishlatiladi; botda faqat suratda yuz borligi tekshiriladi.
+
+3. Kim ko'radi
+Ma'lumotlarni klub Kengashining vakolatli a'zolari ko'radi. Shikoyatlar maxfiy tarzda Etika va intizom komissiyasiga yuboriladi. Ma'lumotlar uchinchi shaxslarga faqat roziligingiz bilan yoki qonunda nazarda tutilgan hollarda beriladi. Ma'lumotlar sotilmaydi va reklama uchun ishlatilmaydi.
+
+4. Qayerda va qancha saqlanadi
+Ma'lumotlar klubning himoyalangan serveridagi bazada saqlanadi, kirish faqat vakolatli adminlarga ochiq. Baza har kuni zaxiralanadi, zaxira nusxalar 14 kun saqlanadi. Ma'lumotlar a'zoligingiz davomida yoki o'chirishni so'raguningizcha saqlanadi.
+
+5. Sizning huquqlaringiz
+• Ma'lumotlaringizni ko'rish va o'zgartirish: botda «⚙️ Sozlamalar».
+• Roziligingizni qaytarib olish va ma'lumotlarni o'chirish: «⚙️ Sozlamalar» → «Ma'lumotlarimni o'chirish». Ma'lumotlar 5 ish kuni ichida o'chiriladi (klub nizomi 7.9, O'zbekiston Respublikasining «Shaxsga doir ma'lumotlar to'g'risida»gi O'RQ-547-son qonuni).
+• Tadbirlarda foto/video olinishiga rozilik ixtiyoriy va uni istalgan vaqtda qaytarib olish mumkin.
+
+6. Aloqa
+Savol yoki e'tirozlar uchun: botda «✉️ Murojaat» yoki Telegram kanal t.me/kiut_muloqot.
