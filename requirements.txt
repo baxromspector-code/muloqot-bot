@@ -2,7 +2,7 @@ aiogram>=3.13,<4
 asyncpg>=0.29
 qrcode[pil]>=7.4
 Pillow>=10.1
-opencv-python-headless>=4.8
+opencv-python-headless>=4.8,<5  # 5.x da CascadeClassifier yo'q (qr.py yuzni aniqlash)
 numpy>=1.24
 # Ixtiyoriy: FSM holatlarini Redis'da saqlash uchun (REDIS_URL)
 # redis>=5.0
