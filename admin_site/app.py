@@ -182,6 +182,12 @@ def _redirect_uri(request: Request) -> str:
 
 
 def _is_local(request: Request) -> bool:
+    """Faqat shu kompyuterdan, proksisiz to'g'ridan-to'g'ri kirish. Server ochiq manzilda (0.0.0.0) tursa yoki
+    so'rov proksi orqali kelsa — hech qachon lokal emas (X-Forwarded-For'ni soxtalashtirib bo'lmasin)."""
+    if os.getenv("ADMIN_HOST", "127.0.0.1") not in ("127.0.0.1", "::1", "localhost"):
+        return False
+    if any(k in request.headers for k in ("x-forwarded-for", "forwarded", "x-real-ip")):
+        return False
     return (request.client.host if request.client else "") in ("127.0.0.1", "::1", "localhost")
 
 
